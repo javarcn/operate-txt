@@ -27,6 +27,7 @@ public class App {
     public static void writeDataToTxt(String filePath) {
         try {
             PrintWriter writer = new PrintWriter(filePath, "UTF-8");
+            sb.trimToSize();
             writer.write(sb.toString());
             writer.close();
         } catch (FileNotFoundException e) {
@@ -47,7 +48,7 @@ public class App {
                 Row row=rtr.next();
                 String content=row.getCell(0).toString();
                 if(StringUtils.isNotBlank(content)){
-                    sb.append(content.split(" ")[1] + "    " + "artist" +"   " + 0 + line);
+                    sb.append(content.split(" ")[1] + "    " + "PLAY_music_artist" +"   " + 0 + line);
                 }
             }
             workbook.close();
@@ -69,7 +70,7 @@ public class App {
             while (rtr.hasNext()) {
                 Row row = rtr.next();
                 if (StringUtils.isNotBlank(row.getCell(2).toString())) {
-                    sb.append(row.getCell(2) + "    " + "song" +"   " + 0 + line);
+                    sb.append(row.getCell(2) + "    " + "PLAY_music_song" +"   " + 0 + line);
                 }
             }
             fs.close();
