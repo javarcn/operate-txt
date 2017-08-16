@@ -16,6 +16,7 @@ public class App {
     private static String singer_excel_fpath = "D:/music/singer.xls";
     private static String music_txt_fpath = "D:/music/music.txt";
     private static StringBuffer sb = new StringBuffer();
+    private static String line=System.getProperty("line.separator");
 
     public static void main(String[] args) {
         getSingerFromExcel(singer_excel_fpath);
@@ -25,7 +26,7 @@ public class App {
 
     public static void writeDataToTxt(String filePath) {
         try {
-            PrintWriter writer = new PrintWriter(filePath, "utf-8");
+            PrintWriter writer = new PrintWriter(filePath, "UTF-8");
             writer.write(sb.toString());
             writer.close();
         } catch (FileNotFoundException e) {
@@ -46,7 +47,7 @@ public class App {
                 Row row=rtr.next();
                 String content=row.getCell(0).toString();
                 if(StringUtils.isNotBlank(content)){
-                    sb.append(content.split(" ")[1] + "  " + "artist" + "  " + 0 + "\r\n");
+                    sb.append(content.split(" ")[1] + "    " + "artist" +"   " + 0 + line);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -66,7 +67,7 @@ public class App {
             while (rtr.hasNext()) {
                 Row row = rtr.next();
                 if (StringUtils.isNotBlank(row.getCell(2).toString())) {
-                    sb.append(row.getCell(2) + "  " + "song" + "  " + 0 + "\r\n");
+                    sb.append(row.getCell(2) + "    " + "song" +"   " + 0 + line);
                 }
             }
             fs.close();
