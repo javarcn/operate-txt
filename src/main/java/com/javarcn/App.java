@@ -50,6 +50,8 @@ public class App {
                     sb.append(content.split(" ")[1] + "    " + "artist" +"   " + 0 + line);
                 }
             }
+            workbook.close();
+            fs.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
