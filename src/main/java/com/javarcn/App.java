@@ -12,17 +12,20 @@ import java.util.Iterator;
  * Hello world!
  */
 public class App {
-    private static String excel_file_path = "D:/music.xls";
-    private static String txt_file_path = "D:/music.txt";
+    private static String song_excel_fpath = "D:/music/song.xls";
+    private static String singer_excel_fpath = "D:/music/singer.xls";
+    private static String music_txt_fpath = "D:/music/music.txt";
+    private static StringBuffer sb = new StringBuffer();
 
     public static void main(String[] args) {
-        StringBuffer sb = getSongFromExcel(excel_file_path);
-        writeSongToTxt(sb);
+        getSingerFromExcel(singer_excel_fpath);
+        getSongFromExcel(song_excel_fpath);
+        writeDataToTxt(music_txt_fpath);
     }
 
-    public static void writeSongToTxt(StringBuffer sb){
+    public static void writeDataToTxt(String filePath) {
         try {
-            PrintWriter writer = new PrintWriter(txt_file_path, "utf-8");
+            PrintWriter writer = new PrintWriter(filePath, "utf-8");
             writer.write(sb.toString());
             writer.close();
         } catch (FileNotFoundException e) {
@@ -32,18 +35,18 @@ public class App {
         }
     }
 
-    public static StringBuffer getSongFromExcel(String filePath) {
-        StringBuffer sb = new StringBuffer();
+    public static void getSingerFromExcel(String filePath) {
         try {
-            File excel = new File(filePath);
-            FileInputStream fs = new FileInputStream(excel);
-            HSSFWorkbook workbook = new HSSFWorkbook(fs);
-            HSSFSheet sheet = workbook.getSheetAt(0);
-            Iterator<Row> rtr = sheet.iterator();
-            while (rtr.hasNext()) {
-                Row row = rtr.next();
-                if(StringUtils.isNotBlank(row.getCell(2).toString())){
-                    sb.append(row.getCell(2)+"  "+"song"+"  "+0+"\r\n");
+            File singerFile = new File(filePath);
+            FileInputStream fs = new FileInputStream(singerFile);
+            HSSFWorkbook workbook=new HSSFWorkbook(fs);
+            HSSFSheet sheet=workbook.getSheetAt(0);
+            Iterator<Row> rtr=sheet.iterator();
+            while (rtr.hasNext()){
+                Row row=rtr.next();
+                String content=row.getCell(0).toString();
+                if(StringUtils.isNotBlank(content)){
+                    sb.append(content.split(" ")[1] + "  " + "artist" + "  " + 0 + "\r\n");
                 }
             }
         } catch (FileNotFoundException e) {
@@ -51,6 +54,27 @@ public class App {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return sb;
+    }
+
+    public static void getSongFromExcel(String filePath) {
+        try {
+            File songFile = new File(filePath);
+            FileInputStream fs = new FileInputStream(songFile);
+            HSSFWorkbook workbook = new HSSFWorkbook(fs);
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rtr = sheet.iterator();
+            while (rtr.hasNext()) {
+                Row row = rtr.next();
+                if (StringUtils.isNotBlank(row.getCell(2).toString())) {
+                    sb.append(row.getCell(2) + "  " + "song" + "  " + 0 + "\r\n");
+                }
+            }
+            fs.close();
+            workbook.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
