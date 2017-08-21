@@ -73,8 +73,8 @@ public class App {
             Iterator<Row> rtr = sheet.iterator();
             while (rtr.hasNext()) {
                 Row row = rtr.next();
-                if (StringUtils.isNotBlank(row.getCell(2).toString())) {
-                    sb.append(row.getCell(2) + "\t" + "PLAY_music_song" + "\t" + 0 + "\r\n");
+                if (StringUtils.isNotBlank(row.getCell(0).toString())) {
+                    sb.append(row.getCell(0) + "\t" + "PLAY_music_song" + "\t" + 1 + "\r\n");
                 }
             }
             fs.close();
